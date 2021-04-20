@@ -15,6 +15,7 @@ private:
     pjsua_acc_config user_cfg;          //user config
     pjsua_acc_id acc_id;                //account id
     pj_status_t status;                 //status
+    pjsua_call_info call_info;
 
     Sip_adapter(Sip_adapter &other);      //singleton blocker
     void operator=(const Sip_adapter &); //singleton blocker
@@ -41,7 +42,11 @@ public:
     void reg(std::string user, std::string password, std::string domain);       //registration
     void unreg();                                                               //unregistration
 
-    void make_call (std::string call_uri);              //making an outgoing call;
+    int make_call (std::string call_uri);               //making an outgoing call
+    void hangup_call(int call_id);                      //hang up call
+    void answer_call(int call_id, int sipcode);         //answering incoming call
+
+    std::string get_call_dst();                        //get call destination
 
 signals:
     void get_status(int status);            //get status of connection

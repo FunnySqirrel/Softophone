@@ -33,7 +33,6 @@ void Sip_adapter::on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id, p
     PJ_LOG(3,(THIS_FILE, "Incoming call from %.*s!!",
     (int)ci.remote_info.slen,
     ci.remote_info.ptr));
-    /* Automatically answer incoming calls with 200/OK */
     emit Sip_adapter::get_instance()->incoming_signal(call_id);
 }
 
@@ -135,7 +134,7 @@ void Sip_adapter::unreg()
 }
 
 //making an outgoing call (совершение исходящего звонка)
-void Sip_adapter::make_call (std::string call_uri)
+int Sip_adapter::make_call (std::string call_uri)
 {
     pjsua_call_setting call_opt;
     pjsua_call_setting_default(&call_opt);
@@ -144,4 +143,21 @@ void Sip_adapter::make_call (std::string call_uri)
     pjsua_call_id call_id;
     status = pjsua_call_make_call(acc_id, &call_dst, &call_opt, 0, NULL, &call_id);
     if (status != PJ_SUCCESS) error_exit("Error making call", status);
+    pjsua_call_get_info(call_id, &call_info);
+    return call_id;
+}
+
+void Sip_adapter::hangup_call(int call_id)
+{
+    pjsua_call_hangup(call_id, 46, NULL, NULL);             //code 46 - BYE
+}
+
+void Sip_adapter::answer_call(int call_id, int sipcode)
+{
+    pjsua_call_answer(call_id, sipcode, NULL, NULL);
+}
+
+std::string Sip_adapter::get_call_dst()
+{
+    return call_info.remote_info.ptr;
 }

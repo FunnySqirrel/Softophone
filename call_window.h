@@ -2,6 +2,7 @@
 #define CALL_WINDOW_H
 
 #include <QWidget>
+#include <sip_adapter.h>
 
 namespace Ui {
 class Call_window;
@@ -13,6 +14,7 @@ class Call_window : public QWidget
 
 private:
     Ui::Call_window *ui;
+    Sip_adapter *adapter=Sip_adapter::get_instance();
     int id;
 
 public:
@@ -20,12 +22,9 @@ public:
     ~Call_window();
 
 public slots:
-    void accept_slot();
-    void reject_slot();
-
-signals:
-    void accept_signal(int call_id);
-    void reject_signal(int call_id);
+    void accept_slot();                     //accept slot
+    void reject_slot();                     //reject slot
+    void hangup_slot();                     //hangup slot
 };
 
 #endif // CALL_WINDOW_H

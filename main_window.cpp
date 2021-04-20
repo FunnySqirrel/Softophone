@@ -54,23 +54,13 @@ void Main_window::make_outcall_slot()
     QString qOutCallName=ui->outcall_name_value->text();
     QString qOutCallDomain=ui->outcall_domain_value->text();
     uri="sip:"+qOutCallName.toStdString()+"@"+qOutCallDomain.toStdString();
-    adapter->make_call(uri);
+    int call_id=adapter->make_call(uri);
+    newcall= new Call_window(nullptr, call_id);
+    newcall->show();            //show incoming call window
 }
 
 void Main_window::incoming_slot(int call_id)
 {
     newcall= new Call_window(nullptr, call_id);                 //creating incoming call window object
-    newcall->setAttribute(Qt::WA_DeleteOnClose);                //deleting window object when close
-    connect(newcall, &Call_window::accept_signal ,this, &Main_window::incoming_accept);    //incoming call connect (accept)
-    connect(newcall, &Call_window::reject_signal ,this, &Main_window::incoming_reject);    //incoming call connect (reject)
     newcall->show();            //show incoming call window
-}
-
-void Main_window::incoming_accept(int call_id)                  //accepting incoming call (200 OK)
-{
-    pjsua_call_answer(call_id, 200, NULL, NULL);
-}
-void Main_window::incoming_reject(int call_id)                  //rejecting incoming call (603 Decline)
-{
-    pjsua_call_answer(call_id, 603, NULL, NULL);
 }
