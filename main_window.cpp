@@ -7,17 +7,18 @@ Main_window::Main_window(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(adapter, &Sip_adapter::get_status,this, &Main_window::renew_status_slot);       //renew status connect
+    connect(adapter, &Sip_adapter::changing_reg_signal,this, &Main_window::renew_status_slot);       //renew status connect
 
     connect(ui->login_btn, &QPushButton::clicked ,this, &Main_window::login_slot);          //login connect
     connect(ui->logout_btn, &QPushButton::clicked ,this, &Main_window::logout_slot);        //logout connect
 
     connect(ui->outcall_btn, &QPushButton::clicked ,this, &Main_window::make_outcall_slot); //out call connect
-    connect(adapter, &Sip_adapter::incoming_signal ,this, &Main_window::incoming_slot);     //incoming call connect
+    connect(adapter, &Sip_adapter::incoming_call_signal ,this, &Main_window::incoming_slot);     //incoming call connect
 }
 
 Main_window::~Main_window()
 {
+    adapter->sip_adapter_destroy();
     delete ui;
 }
 
@@ -43,9 +44,37 @@ void Main_window::logout_slot()
 
 void Main_window::renew_status_slot(int status)
 {
-    std::string st_status=std::to_string(status);
-    QString q_status=QString::fromStdString(st_status);
-    ui->status_value->setText(q_status);
+    switch (status)
+    {
+    case 0:
+        ui->status_value->setText("Unregistered");
+
+        ui->login_btn->setEnabled(true);
+        ui->name_value->setEnabled(true);
+        ui->pass_value->setEnabled(true);
+        ui->domain_value->setEnabled(true);
+
+        ui->logout_btn->setEnabled(false);
+        ui->outcall_btn->setEnabled(false);
+        ui->outcall_name_value->setEnabled(false);
+        ui->outcall_domain_value->setEnabled(false);
+        break;
+    case 1:
+        ui->status_value->setText("Registered");
+
+        ui->logout_btn->setEnabled(true);
+        ui->outcall_btn->setEnabled(true);
+        ui->outcall_name_value->setEnabled(true);
+        ui->outcall_domain_value->setEnabled(true);
+
+        ui->login_btn->setEnabled(false);
+        ui->name_value->setEnabled(false);
+        ui->pass_value->setEnabled(false);
+        ui->domain_value->setEnabled(false);
+
+        break;
+    }
+
 }
 
 void Main_window::make_outcall_slot()
@@ -56,11 +85,11 @@ void Main_window::make_outcall_slot()
     uri="sip:"+qOutCallName.toStdString()+"@"+qOutCallDomain.toStdString();
     int call_id=adapter->make_call(uri);
     newcall= new Call_window(nullptr, call_id);
-    newcall->show();            //show incoming call window
+    newcall->show();            //show call window
 }
 
-void Main_window::incoming_slot(int call_id)
+void Main_window::incoming_slot(int call_id, int status)
 {
-    newcall= new Call_window(nullptr, call_id);                 //creating incoming call window object
-    newcall->show();            //show incoming call window
+    newcall= new Call_window(nullptr, call_id, status);                 //creating call window object
+    newcall->show();            //show call window
 }

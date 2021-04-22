@@ -4,8 +4,6 @@
 #include <QObject>
 #include <pjsua-lib/pjsua.h>
 
-#define THIS_FILE "APP"
-
 class Sip_adapter : public QObject
 {
     Q_OBJECT
@@ -15,24 +13,24 @@ private:
     pjsua_acc_config user_cfg;          //user config
     pjsua_acc_id acc_id;                //account id
     pj_status_t status;                 //status
-    pjsua_call_info call_info;
 
-    Sip_adapter(Sip_adapter &other);      //singleton blocker
-    void operator=(const Sip_adapter &); //singleton blocker
+    Sip_adapter(Sip_adapter &other);            //singleton blocker
+    void operator=(const Sip_adapter &);        //singleton blocker
 
 protected:
     Sip_adapter()
     {}
-    static Sip_adapter* singleton;      //singleton creating
+    static Sip_adapter* singleton;          //singleton creating
 
 
 public:
-    static Sip_adapter *get_instance();   //singleton ascess point
+    static Sip_adapter *get_instance();     //singleton ascess point
 
-    void sip_adapter_init();              //sipadapter initializer
+    void sip_adapter_init();                //sipadapter initializer
+    void sip_adapter_destroy();             //sipadapter destroyer
 
     //callback functions
-    static void on_reg_state2 (pjsua_acc_id acc_id, pjsua_reg_info *info);                              //for registrtion state
+    static void on_reg_state_2 (pjsua_acc_id acc_id, pjsua_reg_info *reg_info);                              //for registrtion state
     static void on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id,pjsip_rx_data *rdata);      //for incoming call
     static void on_call_state(pjsua_call_id call_id, pjsip_event *e);                                   //for call state
     static void on_call_media_state(pjsua_call_id call_id);                                             //for call media state
@@ -46,11 +44,13 @@ public:
     void hangup_call(int call_id);                      //hang up call
     void answer_call(int call_id, int sipcode);         //answering incoming call
 
-    std::string get_call_dst();                        //get call destination
+    std::string get_call_name(int call_id);
+    int get_call_status(int call_id);
 
 signals:
-    void get_status(int status);            //get status of connection
-    void incoming_signal (int call_id);     //signal of incoming call
+    void changing_reg_signal(int status);            //get status of connection
+    void incoming_call_signal (int call_id, int status);     //signal of incoming call
+    void changing_status_signal (int status);
 };
 
 #endif // SIP_ADAPTER_H

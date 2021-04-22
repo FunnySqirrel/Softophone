@@ -1,20 +1,20 @@
 #include "call_window.h"
 #include "ui_call_window.h"
 
-
-Call_window::Call_window(QWidget *parent, int call_id) :
+Call_window::Call_window(QWidget *parent, int call_id, int status) :
     QWidget(parent),
     ui(new Ui::Call_window)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint);
-
     connect(ui->accept_btn, &QPushButton::clicked ,this, &Call_window::accept_slot);    //accepting incoming call connect
     connect(ui->reject_btn, &QPushButton::clicked ,this, &Call_window::reject_slot);    //rejecting incoming call connect
     connect(ui->hangup_btn, &QPushButton::clicked ,this, &Call_window::hangup_slot);    //hangup call connect
+    connect(adapter,&Sip_adapter::changing_status_signal,this,&Call_window::changing_status_slot);
     id=call_id;
-    std::string st_call_dst=adapter->get_call_dst();
-    ui->name_value->setText(QString::fromStdString(st_call_dst));
+    std::string name=adapter->get_call_name(call_id);
+    ui->name_value->setText(QString::fromStdString(name));
+    changing_status_slot (status);
 }
 
 Call_window::~Call_window()
@@ -25,19 +25,58 @@ Call_window::~Call_window()
 void Call_window::accept_slot()
 {
     adapter->answer_call(id, 200);
-    std::string st_call_id=adapter->get_call_dst();
-    QString q_call_id=QString::fromStdString(st_call_id);
-    ui->name_value->setText(q_call_id);
 }
 
 void Call_window::reject_slot()
 {
     adapter->answer_call(id, 603);
-    delete this;
 }
 
 void Call_window::hangup_slot()
 {
     adapter->hangup_call(id);
-    delete this;
+}
+
+void Call_window::changing_status_slot(int status)
+{
+    switch (status)
+    {
+    case 0:
+        ui->status_value->setText("Null");
+        break;
+    case 1:
+        ui->accept_btn->hide();
+        ui->reject_btn->hide();
+        ui->hangup_btn->show();
+        ui->status_value->setText("Calling");
+        break;
+    case 2:
+        ui->accept_btn->show();
+        ui->reject_btn->show();
+        ui->hangup_btn->hide();
+        ui->status_value->setText("Incoming");
+        break;
+    case 3:
+        ui->accept_btn->hide();
+        ui->reject_btn->hide();
+        ui->hangup_btn->show();
+        ui->status_value->setText("Early");
+        break;
+    case 4:
+        ui->accept_btn->hide();
+        ui->reject_btn->hide();
+        ui->hangup_btn->show();
+        ui->status_value->setText("Connecting");
+        break;
+    case 5:
+        ui->accept_btn->hide();
+        ui->reject_btn->hide();
+        ui->hangup_btn->show();
+        ui->status_value->setText("Confirmed");
+        break;
+    case 6:
+        ui->status_value->setText("Disconnecting");
+        delete this;
+        break;
+    }
 }

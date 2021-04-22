@@ -29,6 +29,6 @@ public slots:
     void renew_status_slot(int status); //renew status slot (слот обновления статуса)
     void make_outcall_slot();        //making an outgoing call slot (слот совершения исходящего вызова)
 
-    void incoming_slot(int call_id);        //incoming call handling  slot (слот обработки входящего вызова)
+    void incoming_slot(int call_id, int status);        //incoming call handling  slot (слот обработки входящего вызова)
 };
 #endif // MAIN_WINDOW_H
