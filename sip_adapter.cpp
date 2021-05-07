@@ -16,6 +16,7 @@ Sip_adapter *Sip_adapter::get_instance()
 //callback called by the library when registration state has changed
 void Sip_adapter::on_reg_state_2 (pjsua_acc_id acc_id, pjsua_reg_info *reg_info)
 {
+    PJ_UNUSED_ARG(acc_id);
     emit Sip_adapter::get_instance()->changing_reg_signal(reg_info->renew);
 }
 

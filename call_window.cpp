@@ -1,9 +1,10 @@
 #include "call_window.h"
 #include "ui_call_window.h"
 
-Call_window::Call_window(QWidget *parent, int call_id, int status) :
+Call_window::Call_window(int call_id, int status, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Call_window)
+    ui(new Ui::Call_window),
+    id(call_id)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint);
@@ -11,7 +12,6 @@ Call_window::Call_window(QWidget *parent, int call_id, int status) :
     connect(ui->reject_btn, &QPushButton::clicked ,this, &Call_window::reject_slot);    //rejecting incoming call connect
     connect(ui->hangup_btn, &QPushButton::clicked ,this, &Call_window::hangup_slot);    //hangup call connect
     connect(adapter,&Sip_adapter::changing_status_signal,this,&Call_window::changing_status_slot);
-    id=call_id;
     std::string name=adapter->get_call_name(call_id);
     ui->name_value->setText(QString::fromStdString(name));
     changing_status_slot (status);

@@ -1,4 +1,5 @@
-QT       += core gui
+QT          += core gui
+QT          += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +11,9 @@ CONFIG += c++11
 
 SOURCES += \
     call_window.cpp \
+    contact_editor.cpp \
+    contact_window.cpp \
+    database.cpp \
     main.cpp \
     main_window.cpp \
     settings_window.cpp \
@@ -17,12 +21,17 @@ SOURCES += \
 
 HEADERS += \
     call_window.h \
+    contact_editor.h \
+    contact_window.h \
+    database.h \
     main_window.h \
     settings_window.h \
     sip_adapter.h
 
 FORMS += \
     call_window.ui \
+    contact_editor.ui \
+    contact_window.ui \
     main_window.ui \
     settings_window.ui
 
@@ -81,3 +90,4 @@ LIBS += \
     -lDmoguids \
     -lwmcodecdspuuid \
     -lamstrmid
+

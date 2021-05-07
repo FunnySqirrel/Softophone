@@ -4,6 +4,8 @@
 #include <sip_adapter.h>
 #include <QMainWindow>
 #include "call_window.h"
+#include "database.h"
+#include "contact_window.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Main_window; }
@@ -18,6 +20,8 @@ private:
     Sip_adapter *adapter=Sip_adapter::get_instance();   //creating singleton pointer
     Call_window* newcall;                               //pointer for incoming call window
 
+    Contact_window contacts;
+
 public:
     Main_window(QWidget *parent = nullptr);
     ~Main_window();
@@ -30,5 +34,7 @@ public slots:
     void make_outcall_slot();        //making an outgoing call slot (слот совершения исходящего вызова)
 
     void incoming_slot(int call_id, int status);        //incoming call handling  slot (слот обработки входящего вызова)
+
+    void contact_list_slot();               //opening contact list
 };
 #endif // MAIN_WINDOW_H

@@ -18,7 +18,7 @@ private:
     int id;
 
 public:
-    explicit Call_window(QWidget *parent = nullptr, int call_id=0, int status=0);
+    explicit Call_window(int call_id=0, int status=0, QWidget *parent = nullptr);
     ~Call_window();
 
 public slots:

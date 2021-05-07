@@ -1,6 +1,7 @@
 #include "main_window.h"
 #include "ui_main_window.h"
 
+
 Main_window::Main_window(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Main_window)
@@ -14,6 +15,8 @@ Main_window::Main_window(QWidget *parent)
 
     connect(ui->outcall_btn, &QPushButton::clicked ,this, &Main_window::make_outcall_slot); //out call connect
     connect(adapter, &Sip_adapter::incoming_call_signal ,this, &Main_window::incoming_slot);     //incoming call connect
+
+    connect(ui->contact_list_btn, &QPushButton::clicked ,this, &Main_window::contact_list_slot); //contact list connect
 }
 
 Main_window::~Main_window()
@@ -84,12 +87,17 @@ void Main_window::make_outcall_slot()
     QString qOutCallDomain=ui->outcall_domain_value->text();
     uri="sip:"+qOutCallName.toStdString()+"@"+qOutCallDomain.toStdString();
     int call_id=adapter->make_call(uri);
-    newcall= new Call_window(nullptr, call_id);
+    newcall= new Call_window(call_id);
     newcall->show();            //show call window
 }
 
 void Main_window::incoming_slot(int call_id, int status)
 {
-    newcall= new Call_window(nullptr, call_id, status);                 //creating call window object
+    newcall= new Call_window(call_id, status);                 //creating call window object
     newcall->show();            //show call window
+}
+
+void Main_window::contact_list_slot()
+{
+    contacts.show();
 }
