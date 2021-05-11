@@ -1,11 +1,11 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include <sip_adapter.h>
 #include <QMainWindow>
 #include "call_window.h"
 #include "database.h"
 #include "contact_window.h"
+#include "sip_adapter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Main_window; }
@@ -31,10 +31,15 @@ public slots:
     void logout_slot();         //unregistration slot, called by pushing button (слот разрегистрации, реагирующий на нажатие кнопки.)
 
     void renew_status_slot(int status); //renew status slot (слот обновления статуса)
-    void make_outcall_slot();        //making an outgoing call slot (слот совершения исходящего вызова)
+
+    void outcall_click_slot();
+    void make_outcall_slot(std::string uri);        //making an outgoing call slot (слот совершения исходящего вызова)
 
     void incoming_slot(int call_id, int status);        //incoming call handling  slot (слот обработки входящего вызова)
 
     void contact_list_slot();               //opening contact list
+
+signals:
+    void outcall_signal(std::string uri);
 };
 #endif // MAIN_WINDOW_H

@@ -12,7 +12,7 @@
 
 #define DATABASE_NAME       "contacts.db"
 
-#define TABLE                   "Contacts"
+#define TABLE                   "Contact_list"
 #define TABLE_NAME              "Name"
 #define TABLE_URI               "URI"
 

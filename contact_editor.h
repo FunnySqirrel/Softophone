@@ -16,7 +16,7 @@ private:
     int id;
 
 public:
-    explicit Contact_editor(int=-1, QWidget *parent = nullptr);
+    explicit Contact_editor(int id=-1, QString name="", QString uri="", QWidget *parent = nullptr);
     ~Contact_editor();
 
 public slots:

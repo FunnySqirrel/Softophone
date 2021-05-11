@@ -1,7 +1,7 @@
 #include "contact_editor.h"
 #include "ui_contact_editor.h"
 
-Contact_editor::Contact_editor(int id_in, QWidget *parent) :
+Contact_editor::Contact_editor(int id_in, QString name, QString uri, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Contact_editor)
 {
@@ -14,7 +14,9 @@ Contact_editor::Contact_editor(int id_in, QWidget *parent) :
     {setWindowTitle("New Contact");}
     else
     {
-        setWindowTitle(QString::fromStdString("Edit Contact "+std::to_string(id+1)));
+        setWindowTitle(QString::fromStdString("Edit Contact "));
+        ui->name_value->setText(name);
+        ui->uri_value->setText(uri);
     }
 }
 

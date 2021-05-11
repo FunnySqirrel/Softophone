@@ -6,7 +6,7 @@ Database::Database()
 
 void Database::connect_to_database()
 {
-    if(!QFile("../db/" DATABASE_NAME).exists())
+    if(!QFile("../db/contacts.db").exists())
     {this->restore_database();}
     else
     {this->open_database();}
@@ -15,7 +15,7 @@ void Database::connect_to_database()
 bool Database::open_database()
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("../db/contacts.db");
+    db.setDatabaseName("../db/" DATABASE_NAME);
     if(db.open())
     {return true;}
     else
@@ -47,19 +47,19 @@ void Database::close_database()
 bool Database::create_table()
 {
     QSqlQuery query;
-    if(!query.exec( "CREATE TABLE " TABLE " ("
-                            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                            TABLE_NAME    " VARCHAR(255)    NOT NULL,"
-                            TABLE_URI     " VARCHAR(255)    NOT NULL"
-                        " )"
-                    )){
-        qDebug() << "DataBase: error of create " << TABLE;
-        qDebug() << query.lastError().text();
-        return false;
-    } else {
+    if(query.exec(  "CREATE TABLE " TABLE " ("
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    "Name   VARCHAR(255)    NOT NULL,"
+                    "URI    VARCHAR(255)    NOT NULL"
+                    " )"
+                   ))
+    {
+        emit renew_signal();
         return true;
     }
-    return false;
+    else
+
+    {return false;}
 }
 
 bool Database::add_record(QString name, QString uri)
@@ -69,69 +69,38 @@ bool Database::add_record(QString name, QString uri)
     data.append(uri);
 
     QSqlQuery query;
-    query.prepare("INSERT INTO " TABLE " ( " TABLE_NAME ", "
-                                             TABLE_URI ") "
+    query.prepare("INSERT INTO " TABLE " (" TABLE_NAME ", " TABLE_URI ") "
                   "VALUES (:Name, :URI)");
     query.bindValue(":Name", data[0].toString());
     query.bindValue(":URI", data[1].toString());
 
-    if(!query.exec())
-    {
-        qDebug() << "error insert into " << TABLE;
-        qDebug() << query.lastError().text();
-        return false;
-    }
-    else
+    if(query.exec())
     {
         emit renew_signal();
         return true;
     }
-    return false;
-}
+    else
 
-//bool Database::remove_record(int id)
-//{
-//    QSqlQuery query;
-//
-//    query.prepare("DELETE FROM " TABLE " WHERE id=:ID;");
-//    query.bindValue(":ID", id);
-//
-//    if(!query.exec())
-//    {
-//        qDebug() << "error delete row " << TABLE;
-//        qDebug() << query.lastError().text();
-//        return false;
-//    }
-//    else
-//    {
-//        emit renew_signal();
-//        return true;
-//    }
-//    return false;
-//}
+    {return false;}
+}
 
 bool Database::edit_record(int id, QString name, QString uri)
 {
     QVariantList data;
-    data.append(id);
     data.append(name);
     data.append(uri);
 
     QSqlQuery query;
-    query.prepare("UPDATE " TABLE " SET " TABLE_NAME " = :Name , "   TABLE_URI " = :URI " "WHERE id = :ID");
-    query.bindValue(":ID",  data[0].toString());
-    query.bindValue(":Name", data[1].toString());
-    query.bindValue(":URI", data[2].toString());
-    if (!query.exec())
-    {
-        qDebug() << "error edit row " << TABLE;
-        qDebug() << query.lastError().text();
-        return false;
-    }
-    else
+    query.prepare("UPDATE " TABLE " SET " TABLE_NAME " = :Name , " TABLE_URI " = :URI WHERE id = :ID ;");
+    query.bindValue(":ID",  id);
+    query.bindValue(":Name", data[0].toString());
+    query.bindValue(":URI", data[1].toString());
+    if(query.exec())
     {
         emit renew_signal();
         return true;
     }
-    return false;
+    else
+
+    {return false;}
 }

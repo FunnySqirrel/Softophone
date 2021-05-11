@@ -6,32 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>516</width>
-    <height>270</height>
+    <width>583</width>
+    <height>335</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Softophone</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1,1,1" columnstretch="0,0">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
-    </property>
-    <property name="leftMargin">
-     <number>50</number>
-    </property>
-    <property name="topMargin">
-     <number>50</number>
-    </property>
-    <property name="rightMargin">
-     <number>50</number>
-    </property>
-    <property name="bottomMargin">
-     <number>50</number>
-    </property>
+   <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
       <item>
        <widget class="QLabel" name="status_label">
         <property name="text">
@@ -97,36 +82,19 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="1">
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QLabel" name="OutCallDomainLabel">
-        <property name="text">
-         <string>OutCall Domain:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="outcall_name_value">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="outcall_domain_value">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>192.168.129.70</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
+    <item row="1" column="1" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
        <widget class="QLabel" name="OutCallNameLabel">
         <property name="text">
          <string>OutCall Name:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="outcall_name_value">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -139,6 +107,13 @@
       </property>
       <property name="text">
        <string>Call</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QPushButton" name="contact_list_btn">
+      <property name="text">
+       <string>Contact list</string>
       </property>
      </widget>
     </item>
@@ -178,13 +153,6 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="1">
-     <widget class="QPushButton" name="contact_list_btn">
-      <property name="text">
-       <string>Contact list</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -195,8 +163,6 @@
   <tabstop>domain_value</tabstop>
   <tabstop>login_btn</tabstop>
   <tabstop>logout_btn</tabstop>
-  <tabstop>outcall_name_value</tabstop>
-  <tabstop>outcall_domain_value</tabstop>
   <tabstop>outcall_btn</tabstop>
  </tabstops>
  <resources/>
