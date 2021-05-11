@@ -17,6 +17,7 @@ Sip_adapter *Sip_adapter::get_instance()
 void Sip_adapter::on_reg_state_2 (pjsua_acc_id acc_id, pjsua_reg_info *reg_info)
 {
     PJ_UNUSED_ARG(acc_id);
+    Sip_adapter::get_instance()->reg_status=reg_info->renew;
     emit Sip_adapter::get_instance()->changing_reg_signal(reg_info->renew);
 }
 
@@ -104,9 +105,10 @@ void Sip_adapter::sip_adapter_destroy()
 }
 
 //registration (регистрация)
-void Sip_adapter::reg(std::string user, std::string password, std::string domain)
+void Sip_adapter::reg(std::string user, std::string password, std::string user_domain)
 {
     pjsua_acc_config_default(&user_cfg);
+    domain=user_domain;
     std::string id="sip:"+user+"@"+domain;      //creating "string" (создание строки типа "string")
     user_cfg.id = pj_str((char*)id.c_str());    //and convert to char* (и преобразование ее в char*)
     std::string reg_uri="sip:"+domain;
@@ -131,9 +133,15 @@ void Sip_adapter::unreg()
     if (status != PJ_SUCCESS) error_exit("Error deleting account", status);
 }
 
-//making an outgoing call (совершение исходящего звонка)
-int Sip_adapter::make_call (std::string call_uri)
+int Sip_adapter::get_status()
 {
+    return reg_status;
+}
+
+//making an outgoing call (совершение исходящего звонка)
+int Sip_adapter::make_call (std::string uri)
+{
+    std::string call_uri="sip:"+uri+"@"+domain;
     pjsua_call_setting call_opt;
     pjsua_call_setting_default(&call_opt);
     pj_str_t call_dst;
