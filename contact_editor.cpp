@@ -33,8 +33,18 @@ void Contact_editor::accept_slot()
     {emit accept_new_signal(name,uri);}
     else
     {emit accept_edit_signal(id,name,uri);}
+    this->close();
     delete this;
 }
 
 void Contact_editor::dismiss_slot()
-{delete this;}
+{
+    this->close();
+    delete this;
+}
+
+void Contact_editor::closing_slot()
+{
+    this->close();
+    delete this;
+}

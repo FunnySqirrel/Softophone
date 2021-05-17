@@ -2,6 +2,10 @@
 #define MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include <QApplication>
+#include <QSettings>
+#include <QTextEdit>
+#include <QCloseEvent>
 #include "call_window.h"
 #include "database.h"
 #include "contact_window.h"
@@ -18,9 +22,13 @@ class Main_window : public QMainWindow
 private:
     Ui::Main_window *ui;
     Sip_adapter *adapter=Sip_adapter::get_instance();   //creating singleton pointer
-    Call_window* newcall;                               //pointer for incoming call window
+    Call_window *new_call;                              //pointer for incoming call window
 
     Contact_window contacts;
+
+    QSettings *settings;
+
+    void closeEvent(QCloseEvent *event);
 
 public:
     Main_window(QWidget *parent = nullptr);
@@ -41,5 +49,6 @@ public slots:
 
 signals:
     void outcall_signal(std::string uri);
+    void im_logout_signal();
 };
 #endif // MAIN_WINDOW_H

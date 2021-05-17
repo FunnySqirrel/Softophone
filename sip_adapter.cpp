@@ -58,20 +58,11 @@ void Sip_adapter::on_call_media_state(pjsua_call_id call_id)
     }
 }
 
-//display error and exit application
-void Sip_adapter::error_exit(const char *title, pj_status_t status)
-{
-    //pjsua_perror(THIS_FILE, title, status);
-    pjsua_destroy();
-    exit(1);
-}
-
 //sip adapter initialization (инициализация sip-адаптера)
 void Sip_adapter::sip_adapter_init()
 {
     //Create pjsua first! (создание pjsua)
     status = pjsua_create();
-    //if (status != PJ_SUCCESS) error_exit("Error in pjsua_create()", status);
 
     //Init pjsua
     pjsua_config_default(&cfg);
@@ -82,7 +73,6 @@ void Sip_adapter::sip_adapter_init()
     pjsua_logging_config_default(&log_cfg);
     log_cfg.console_level = 4;
     status = pjsua_init(&cfg, &log_cfg, NULL);
-    //if (status != PJ_SUCCESS) error_exit("Error in pjsua_init()", status);
 
     //creating TCP transport (создание TCP транспорта)
     {
@@ -91,12 +81,10 @@ void Sip_adapter::sip_adapter_init()
     pjsua_transport_config_default(&t_cfg);
     t_cfg.port = 0;
     status = pjsua_transport_create(PJSIP_TRANSPORT_TCP, &t_cfg, NULL);
-    //if (status != PJ_SUCCESS) error_exit("Error creating transport", status);
     }
 
     //Initialization is done, now start pjsua (запуск pjsua)
     status = pjsua_start();
-    //if (status != PJ_SUCCESS) error_exit("Error starting pjsua", status);
 }
 
 void Sip_adapter::sip_adapter_destroy()
@@ -122,15 +110,12 @@ void Sip_adapter::reg(std::string user, std::string password, std::string user_d
     std::string proxy="<sip:"+domain+":5060;transport=tcp>";
     user_cfg.proxy[user_cfg.proxy_cnt++] = pj_str((char*) proxy.c_str());
     status = pjsua_acc_add(&user_cfg, PJ_TRUE, &acc_id);
-    //if (status != PJ_SUCCESS) error_exit("Error adding account", status);
 }
 
 //unregistration (разрегистрация)
 void Sip_adapter::unreg()
 {
     status = pjsua_acc_set_registration(acc_id, PJ_FALSE);
-    //status = pjsua_acc_del(acc_id);
-    if (status != PJ_SUCCESS) error_exit("Error deleting account", status);
 }
 
 int Sip_adapter::get_status()
@@ -148,7 +133,6 @@ int Sip_adapter::make_call (std::string uri)
     call_dst=pj_str((char*) call_uri.c_str());
     pjsua_call_id call_id;
     status = pjsua_call_make_call(acc_id, &call_dst, &call_opt, 0, NULL, &call_id);
-    //if (status != PJ_SUCCESS) error_exit("Error making call", status);
     pjsua_call_info ci;
     pjsua_call_get_info(call_id, &ci);
     return call_id;

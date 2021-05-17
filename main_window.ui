@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>583</width>
-    <height>335</height>
+    <width>423</width>
+    <height>169</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,9 +27,52 @@
       <item>
        <widget class="QLabel" name="status_value">
         <property name="text">
-         <string>Init</string>
+         <string>Unregistered</string>
         </property>
        </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="OutCallNameLabel">
+          <property name="text">
+           <string>OutCall Name:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="outcall_name_value">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QPushButton" name="outcall_btn">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Call</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="contact_list_btn">
+          <property name="text">
+           <string>Contact list</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -52,7 +95,7 @@
       <item row="2" column="1">
        <widget class="QLineEdit" name="domain_value">
         <property name="text">
-         <string>192.168.129.70</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -69,60 +112,28 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>123456</string>
+         <string/>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
        <widget class="QLineEdit" name="name_value">
         <property name="text">
-         <string>0001</string>
+         <string/>
         </property>
        </widget>
       </item>
      </layout>
     </item>
-    <item row="1" column="1" colspan="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="OutCallNameLabel">
-        <property name="text">
-         <string>OutCall Name:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="outcall_name_value">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="outcall_btn">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Call</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QPushButton" name="contact_list_btn">
-      <property name="text">
-       <string>Contact list</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
+    <item row="2" column="1" rowspan="2">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="login_btn">
         <property name="text">
-         <string>Log in!</string>
+         <string>Log in</string>
         </property>
        </widget>
       </item>
@@ -132,7 +143,7 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Log out?</string>
+         <string>Log out</string>
         </property>
         <property name="checkable">
          <bool>false</bool>
@@ -152,6 +163,16 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="3" column="0">
+     <widget class="QCheckBox" name="remember_check">
+      <property name="text">
+       <string>Remember me</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

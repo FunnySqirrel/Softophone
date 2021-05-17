@@ -2,7 +2,9 @@
 #define CALL_WINDOW_H
 
 #include <QWidget>
-#include <sip_adapter.h>
+#include <QSound>
+#include "sip_adapter.h"
+
 
 namespace Ui {
 class Call_window;

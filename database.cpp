@@ -6,7 +6,7 @@ Database::Database()
 
 void Database::connect_to_database()
 {
-    if(!QFile("../db/contacts.db").exists())
+    if(!QFile(DATABASE_NAME).exists())
     {this->restore_database();}
     else
     {this->open_database();}
@@ -15,7 +15,7 @@ void Database::connect_to_database()
 bool Database::open_database()
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("../db/" DATABASE_NAME);
+    db.setDatabaseName(DATABASE_NAME);
     if(db.open())
     {return true;}
     else

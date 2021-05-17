@@ -7,7 +7,6 @@
 #include <QSqlError>
 #include <QSqlDatabase>
 #include <QFile>
-#include <QDate>
 #include <QDebug>
 
 #define DATABASE_NAME       "contacts.db"

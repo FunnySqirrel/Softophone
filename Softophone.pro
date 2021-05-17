@@ -1,5 +1,4 @@
-QT          += core gui
-QT          += sql
+QT          += core gui multimedia sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,7 +15,6 @@ SOURCES += \
     database.cpp \
     main.cpp \
     main_window.cpp \
-    settings_window.cpp \
     sip_adapter.cpp
 
 HEADERS += \
@@ -25,15 +23,13 @@ HEADERS += \
     contact_window.h \
     database.h \
     main_window.h \
-    settings_window.h \
     sip_adapter.h
 
 FORMS += \
     call_window.ui \
     contact_editor.ui \
     contact_window.ui \
-    main_window.ui \
-    settings_window.ui
+    main_window.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -6,29 +6,28 @@ Contact_window::Contact_window(QWidget *parent) :
     ui(new Ui::Contact_window)
 {
     ui->setupUi(this);
-    connect (ui->add_btn, &QPushButton::clicked, this, &Contact_window::new_contact_slot);
-    connect (&database, &Database::renew_signal, this, &Contact_window::renew_table_slot);
 
-    QDir db("../db");
-    if (!db.exists())
-    {db.mkdir("../db");}
-
-    database.connect_to_database();
+    database= new Database;
+    database->connect_to_database();
 
     this->setup_model(TABLE, QStringList() << trUtf8("id")<< trUtf8("Name")<< trUtf8("URI"));
     this->create_ui();
+
+    connect (ui->add_btn, &QPushButton::clicked, this, &Contact_window::new_contact_slot);
+    connect (database, &Database::renew_signal, this, &Contact_window::renew_table_slot);
 }
 
 Contact_window::~Contact_window()
 {
     delete ui;
+    delete model;
+    delete database;
 }
 
-void Contact_window::new_contact_slot()
+void Contact_window::closeEvent(QCloseEvent *event)
 {
-    new_cont= new Contact_editor();
-    connect(new_cont, &Contact_editor::accept_new_signal, &database, &Database::add_record);
-    new_cont->show();
+    emit im_closed_signal();
+    event->accept();
 }
 
 void Contact_window::setup_model(const QString &table_name, const QStringList &headers)
@@ -96,6 +95,14 @@ void Contact_window::outcall_contact_slot()
     emit outcall_contact_signal(model->data(model->index(row, 2)).toString().toStdString());
 }
 
+void Contact_window::new_contact_slot()
+{
+    new_cont= new Contact_editor();
+    connect(new_cont, &Contact_editor::accept_new_signal, database, &Database::add_record);
+    connect(this, &Contact_window::im_closed_signal, new_cont, &Contact_editor::closing_slot);
+    new_cont->show();
+}
+
 void Contact_window::edit_contact_slot()
 {
     int row = ui->contact_table->selectionModel()->currentIndex().row();
@@ -103,7 +110,8 @@ void Contact_window::edit_contact_slot()
     QString name=model->data(model->index(row, 1)).toString();
     QString uri=model->data(model->index(row, 2)).toString();
     new_cont= new Contact_editor(id, name, uri);
-    connect(new_cont, &Contact_editor::accept_edit_signal, &database, &Database::edit_record);
+    connect(new_cont, &Contact_editor::accept_edit_signal, database, &Database::edit_record);
+    connect(this, &Contact_window::im_closed_signal, new_cont, &Contact_editor::closing_slot);
     new_cont->show();
 }
 

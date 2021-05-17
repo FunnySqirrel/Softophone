@@ -23,6 +23,8 @@ public slots:
     void accept_slot();
     void dismiss_slot();
 
+    void closing_slot();
+
 signals:
     void accept_new_signal(QString name, QString uri);
     void accept_edit_signal(int id, QString name, QString uri);
