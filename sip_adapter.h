@@ -37,10 +37,6 @@ public:
     void sip_adapter_init();                //sipadapter initializer
     void sip_adapter_destroy();             //sipadapter destroyer
 
-    //callback functions
-
-    static void error_exit(const char *title, pj_status_t status);
-
     void reg(std::string user, std::string password, std::string user_domain);      //registration
     void unreg();                                                                   //unregistration
     int get_status();                                       //return registration status

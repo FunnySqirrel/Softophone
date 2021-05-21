@@ -32,9 +32,8 @@ public:
     bool create_table();
 
 public slots:
-    bool add_record(QString name, QString uri);
-    //bool remove_record(int id);
-    bool edit_record(int id, QString name, QString uri);
+    bool add_record_slot(QString name, QString uri);
+    bool edit_record_slot(int id, QString name, QString uri);
 signals:
     void renew_signal();
 };

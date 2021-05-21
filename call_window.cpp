@@ -12,7 +12,7 @@ Call_window::Call_window(int call_id, int status, QWidget *parent) :
     connect(ui->reject_btn, &QPushButton::clicked ,this, &Call_window::reject_slot);    //rejecting incoming call connect
     connect(ui->hangup_btn, &QPushButton::clicked ,this, &Call_window::hangup_slot);    //hangup call connect
     connect(adapter,&Sip_adapter::changing_status_signal,this,&Call_window::changing_status_slot);
-    std::string name=adapter->get_call_name(call_id);
+    std::string name = adapter->get_call_name(call_id);
     ui->name_value->setText(QString::fromStdString(name));
     changing_status_slot (status);
 }

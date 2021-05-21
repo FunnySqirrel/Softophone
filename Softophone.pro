@@ -39,51 +39,40 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 #Pjproject libs including.
 
 INCLUDEPATH += \
-    $$PWD/../../libs/pjproject/pjsip/include \
-    $$PWD/../../libs/pjproject/pjlib/include \
-    $$PWD/../../libs/pjproject/pjlib-util/include \
-    $$PWD/../../libs/pjproject/pjmedia/include \
-    $$PWD/../../libs/pjproject/pjnath/include \
+    $$PWD/../../libs/pjproject/include \
 
 LIBS += \
-    -L"$$PWD/../../libs/pjproject/lib" \
-    -L"$$PWD/../../libs/pjproject/pjsip/lib" \
-    -L"$$PWD/../../libs/pjproject/pjlib/lib" \
-    -L"$$PWD/../../libs/pjproject/pjlib-util/lib" \
-    -L"$$PWD/../../libs/pjproject/pjmedia/lib" \
-    -L"$$PWD/../../libs/pjproject/pjnath/lib" \
-    -L"$$PWD/../../libs/pjproject/third_party/lib" \
-    -L"$$PWD/../../libs/pjproject/WebRTC/Debug" \
-    -llibpjproject-x86_64-x64-vc14-Debug \
-    -lpjsip-core-x86_64-x64-vc14-Debug \
-    -lpjsip-simple-x86_64-x64-vc14-Debug \
-    -lpjsip-ua-x86_64-x64-vc14-Debug \
-    -lpjsua2-lib-x86_64-x64-vc14-Debug \
-    -lpjsua-lib-x86_64-x64-vc14-Debug \
-    -lpjlib-x86_64-x64-vc14-Debug \
-    -lpjlib-util-x86_64-x64-vc14-Debug \
-    -lpjmedia-audiodev-x86_64-x64-vc14-Debug \
-    -lpjmedia-codec-x86_64-x64-vc14-Debug \
-    -lpjmedia-videodev-x86_64-x64-vc14-Debug \
-    -lpjmedia-x86_64-x64-vc14-Debug \
-    -lpjnath-x86_64-x64-vc14-Debug \
-    -llibgsmcodec-x86_64-x64-vc14-Debug \
-    -llibspeex-x86_64-x64-vc14-Debug \
-    -llibsrtp-x86_64-x64-vc14-Debug \
-    -llibilbccodec-x86_64-x64-vc14-Debug \
-    -llibresample-x86_64-x64-vc14-Debug \
-    -llibbaseclasses-x86_64-x64-vc14-Debug \
-    -llibg7221codec-x86_64-x64-vc14-Debug \
-    -llibmilenage-x86_64-x64-vc14-Debug \
-    -llibresample-x86_64-x64-vc14-Debug \
-    -llibspeex-x86_64-x64-vc14-Debug \
-    -llibsrtp-x86_64-x64-vc14-Debug \
-    -llibwebrtc-x86_64-x64-vc14-Debug \
-    -llibyuv-x86_64-x64-vc14-Debug \
+    -L"$$PWD/../../libs/pjproject" \
+    -L"$$PWD/../../libs/pjproject/third_party" \
+    -llibpjproject-x86_64-x64-vc14-Release \
+    -lpjsip-core-x86_64-x64-vc14-Release \
+    -lpjsip-simple-x86_64-x64-vc14-Release \
+    -lpjsip-ua-x86_64-x64-vc14-Release \
+    -lpjsua2-lib-x86_64-x64-vc14-Release \
+    -lpjsua-lib-x86_64-x64-vc14-Release \
+    -lpjlib-x86_64-x64-vc14-Release \
+    -lpjlib-util-x86_64-x64-vc14-Release \
+    -lpjmedia-audiodev-x86_64-x64-vc14-Release \
+    -lpjmedia-codec-x86_64-x64-vc14-Release \
+    -lpjmedia-videodev-x86_64-x64-vc14-Release \
+    -lpjmedia-x86_64-x64-vc14-Release \
+    -lpjnath-x86_64-x64-vc14-Release \
+    -llibgsmcodec-x86_64-x64-vc14-Release \
+    -llibspeex-x86_64-x64-vc14-Release \
+    -llibsrtp-x86_64-x64-vc14-Release \
+    -llibilbccodec-x86_64-x64-vc14-Release \
+    -llibresample-x86_64-x64-vc14-Release \
+    -llibbaseclasses-x86_64-x64-vc14-Release \
+    -llibg7221codec-x86_64-x64-vc14-Release \
+    -llibmilenage-x86_64-x64-vc14-Release \
+    -llibresample-x86_64-x64-vc14-Release \
+    -llibspeex-x86_64-x64-vc14-Release \
+    -llibsrtp-x86_64-x64-vc14-Release \
+    -llibwebrtc-x86_64-x64-vc14-Release \
+    -llibyuv-x86_64-x64-vc14-Release \
     -lWs2_32 \
     -lOle32 \
     -lMsdmo \
     -lDmoguids \
     -lwmcodecdspuuid \
     -lamstrmid
-

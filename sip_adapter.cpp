@@ -58,10 +58,10 @@ void Sip_adapter::on_call_media_state(pjsua_call_id call_id)
     }
 }
 
-//sip adapter initialization (инициализация sip-адаптера)
+//sip adapter initialization
 void Sip_adapter::sip_adapter_init()
 {
-    //Create pjsua first! (создание pjsua)
+    //Create pjsua first!
     status = pjsua_create();
 
     //Init pjsua
@@ -74,7 +74,7 @@ void Sip_adapter::sip_adapter_init()
     log_cfg.console_level = 4;
     status = pjsua_init(&cfg, &log_cfg, NULL);
 
-    //creating TCP transport (создание TCP транспорта)
+    //creating TCP transport
     {
     pjsua_transport_config t_cfg;
 
@@ -83,7 +83,7 @@ void Sip_adapter::sip_adapter_init()
     status = pjsua_transport_create(PJSIP_TRANSPORT_TCP, &t_cfg, NULL);
     }
 
-    //Initialization is done, now start pjsua (запуск pjsua)
+    //Initialization is done, now start pjsua
     status = pjsua_start();
 }
 
@@ -92,14 +92,14 @@ void Sip_adapter::sip_adapter_destroy()
     pjsua_destroy();
 }
 
-//registration (регистрация)
+//registration
 void Sip_adapter::reg(std::string user, std::string password, std::string user_domain)
 {
     pjsua_acc_config_default(&user_cfg);
-    domain=user_domain;
-    std::string id="sip:"+user+"@"+domain;      //creating "string" (создание строки типа "string")
-    user_cfg.id = pj_str((char*)id.c_str());    //and convert to char* (и преобразование ее в char*)
-    std::string reg_uri="sip:"+domain;
+    domain = user_domain;
+    std::string id = "sip:"+user+"@"+domain;      //creating "string"
+    user_cfg.id = pj_str((char*)id.c_str());    //and convert to char*
+    std::string reg_uri ="sip:"+domain;
     user_cfg.reg_uri = pj_str((char*)reg_uri.c_str());
     user_cfg.cred_count = 1;
     user_cfg.cred_info[0].realm = pj_str((char*) "*");
@@ -107,12 +107,12 @@ void Sip_adapter::reg(std::string user, std::string password, std::string user_d
     user_cfg.cred_info[0].username = pj_str((char*) user.c_str());
     user_cfg.cred_info[0].data_type = PJSIP_CRED_DATA_PLAIN_PASSWD;
     user_cfg.cred_info[0].data = pj_str((char*) password.c_str());
-    std::string proxy="<sip:"+domain+":5060;transport=tcp>";
+    std::string proxy = "<sip:"+domain+":5060;transport=tcp>";
     user_cfg.proxy[user_cfg.proxy_cnt++] = pj_str((char*) proxy.c_str());
     status = pjsua_acc_add(&user_cfg, PJ_TRUE, &acc_id);
 }
 
-//unregistration (разрегистрация)
+//unregistration
 void Sip_adapter::unreg()
 {
     status = pjsua_acc_set_registration(acc_id, PJ_FALSE);
@@ -123,14 +123,14 @@ int Sip_adapter::get_status()
     return reg_status;
 }
 
-//making an outgoing call (совершение исходящего звонка)
+//making an outgoing call
 int Sip_adapter::make_call (std::string uri)
 {
-    std::string call_uri="sip:"+uri+"@"+domain;
+    std::string call_uri = "sip:"+uri+"@"+domain;
     pjsua_call_setting call_opt;
     pjsua_call_setting_default(&call_opt);
     pj_str_t call_dst;
-    call_dst=pj_str((char*) call_uri.c_str());
+    call_dst = pj_str((char*) call_uri.c_str());
     pjsua_call_id call_id;
     status = pjsua_call_make_call(acc_id, &call_dst, &call_opt, 0, NULL, &call_id);
     pjsua_call_info ci;

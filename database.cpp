@@ -52,17 +52,16 @@ bool Database::create_table()
                     "Name   VARCHAR(255)    NOT NULL,"
                     "URI    VARCHAR(255)    NOT NULL"
                     " )"
-                   ))
+                    ))
     {
         emit renew_signal();
         return true;
     }
     else
-
     {return false;}
 }
 
-bool Database::add_record(QString name, QString uri)
+bool Database::add_record_slot(QString name, QString uri)
 {
     QVariantList data;
     data.append(name);
@@ -80,11 +79,10 @@ bool Database::add_record(QString name, QString uri)
         return true;
     }
     else
-
     {return false;}
 }
 
-bool Database::edit_record(int id, QString name, QString uri)
+bool Database::edit_record_slot(int id, QString name, QString uri)
 {
     QVariantList data;
     data.append(name);
@@ -101,6 +99,5 @@ bool Database::edit_record(int id, QString name, QString uri)
         return true;
     }
     else
-
     {return false;}
 }

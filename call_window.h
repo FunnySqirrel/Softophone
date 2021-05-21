@@ -16,11 +16,11 @@ class Call_window : public QWidget
 
 private:
     Ui::Call_window *ui;
-    Sip_adapter *adapter=Sip_adapter::get_instance();
+    Sip_adapter *adapter = Sip_adapter::get_instance();
     int id;
 
 public:
-    explicit Call_window(int call_id=0, int status=0, QWidget *parent = nullptr);
+    explicit Call_window(int call_id = 0, int status = 0, QWidget *parent = nullptr);
     ~Call_window();
 
 public slots:

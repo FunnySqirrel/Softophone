@@ -22,13 +22,13 @@ Main_window::Main_window(QWidget *parent)
     connect(this, &Main_window::outcall_signal ,this, &Main_window::make_outcall_slot); //out call connect
     connect(&contacts, &Contact_window::outcall_contact_signal ,this, &Main_window::make_outcall_slot);
 
-    settings= new QSettings("settings.ini", QSettings::IniFormat);
+    settings = new QSettings("settings.ini", QSettings::IniFormat);
     settings->beginGroup( "registration_info" );
-    QString name= settings->value("name").toString();
+    QString name = settings->value("name").toString();
     ui->name_value->setText(name);
     QString pass= settings->value("password").toString();
     ui->pass_value->setText(pass);
-    QString domain= settings->value("domain").toString();
+    QString domain = settings->value("domain").toString();
     ui->domain_value->setText(domain);
     settings->endGroup();
 }
@@ -60,12 +60,12 @@ void Main_window::login_slot()
     password,                   //password
     domain;                     //user's domain
 
-    QString qname=ui->name_value->text();
-    name=qname.toStdString();
-    QString qpassword=ui->pass_value->text();
-    password=qpassword.toStdString();
+    QString qname = ui->name_value->text();
+    name = qname.toStdString();
+    QString qpassword = ui->pass_value->text();
+    password = qpassword.toStdString();
     QString qdomain=ui->domain_value->text();
-    domain=qdomain.toStdString();
+    domain = qdomain.toStdString();
     adapter->reg(name, password, domain);
 }
 
@@ -115,27 +115,25 @@ void Main_window::renew_status_slot(int status)
 
 void Main_window::outcall_click_slot()
 {
-    QString qOutCallName=ui->outcall_name_value->text();
-    std:: string uri=qOutCallName.toStdString();
+    QString qOutCallName = ui->outcall_name_value->text();
+    std:: string uri = qOutCallName.toStdString();
     emit outcall_signal(uri);
 }
 
 void Main_window::make_outcall_slot(std::string uri)
 {
-    int call_id=adapter->make_call(uri);
-    new_call= new Call_window(call_id);
+    int call_id = adapter->make_call(uri);
+    new_call = new Call_window(call_id);
     connect(this, &Main_window::im_logout_signal, new_call, &Call_window::hangup_slot);
     new_call->show();            //show call window
 }
 
 void Main_window::incoming_slot(int call_id, int status)
 {
-    new_call= new Call_window(call_id, status);                 //creating call window object
+    new_call = new Call_window(call_id, status);                 //creating call window object
     connect(this, &Main_window::im_logout_signal, new_call, &Call_window::hangup_slot);
     new_call->show();            //show call window
 }
 
 void Main_window::contact_list_slot()
-{
-    contacts.show();
-}
+{contacts.show();}

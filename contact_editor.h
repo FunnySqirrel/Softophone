@@ -16,14 +16,12 @@ private:
     int id;
 
 public:
-    explicit Contact_editor(int id=-1, QString name="", QString uri="", QWidget *parent = nullptr);
+    explicit Contact_editor(int id = -1, QString name = "", QString uri = "", QWidget *parent = nullptr);
     ~Contact_editor();
 
 public slots:
     void accept_slot();
     void dismiss_slot();
-
-    void closing_slot();
 
 signals:
     void accept_new_signal(QString name, QString uri);
