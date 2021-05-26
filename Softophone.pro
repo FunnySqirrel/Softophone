@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     call_window.cpp \
+    call_window.cpp \
     contact_editor.cpp \
     contact_window.cpp \
     database.cpp \
@@ -39,37 +40,31 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 #Pjproject libs including.
 
 INCLUDEPATH += \
-    $$PWD/../../libs/pjproject/include \
+    $$PWD/../../libs/pjproject_2.10/pjlib/include \
+    $$PWD/../../libs/pjproject_2.10/pjlib-util/include \
+    $$PWD/../../libs/pjproject_2.10/pjmedia/include \
+    $$PWD/../../libs/pjproject_2.10/pjnath/include \
+    $$PWD/../../libs/pjproject_2.10/pjsip/include \
 
 LIBS += \
-    -L"$$PWD/../../libs/pjproject" \
-    -L"$$PWD/../../libs/pjproject/third_party" \
+    -L"$$PWD/../../libs/pjproject_2.10/lib" \
+    -L"$$PWD/../../libs/pjproject_2.10/pjlib" \
+    -L"$$PWD/../../libs/pjproject_2.10/pjlib-util" \
+    -L"$$PWD/../../libs/pjproject_2.10/pjmedia" \
+    -L"$$PWD/../../libs/pjproject_2.10/pjnath" \
+    -L"$$PWD/../../libs/pjproject_2.10/pjsip" \
     -llibpjproject-x86_64-x64-vc14-Release \
+    -lpjlib-x86_64-x64-vc14-Release \
+    -lpjlib-util-x86_64-x64-vc14-Release \
+    -lpjmedia-audiodev-x86_64-x64-vc14-Release \
+    -lpjmedia-codec-x86_64-x64-vc14-Release \
+    -lpjmedia-x86_64-x64-vc14-Release \
+    -lpjnath-x86_64-x64-vc14-Release \
     -lpjsip-core-x86_64-x64-vc14-Release \
     -lpjsip-simple-x86_64-x64-vc14-Release \
     -lpjsip-ua-x86_64-x64-vc14-Release \
     -lpjsua2-lib-x86_64-x64-vc14-Release \
     -lpjsua-lib-x86_64-x64-vc14-Release \
-    -lpjlib-x86_64-x64-vc14-Release \
-    -lpjlib-util-x86_64-x64-vc14-Release \
-    -lpjmedia-audiodev-x86_64-x64-vc14-Release \
-    -lpjmedia-codec-x86_64-x64-vc14-Release \
-    -lpjmedia-videodev-x86_64-x64-vc14-Release \
-    -lpjmedia-x86_64-x64-vc14-Release \
-    -lpjnath-x86_64-x64-vc14-Release \
-    -llibgsmcodec-x86_64-x64-vc14-Release \
-    -llibspeex-x86_64-x64-vc14-Release \
-    -llibsrtp-x86_64-x64-vc14-Release \
-    -llibilbccodec-x86_64-x64-vc14-Release \
-    -llibresample-x86_64-x64-vc14-Release \
-    -llibbaseclasses-x86_64-x64-vc14-Release \
-    -llibg7221codec-x86_64-x64-vc14-Release \
-    -llibmilenage-x86_64-x64-vc14-Release \
-    -llibresample-x86_64-x64-vc14-Release \
-    -llibspeex-x86_64-x64-vc14-Release \
-    -llibsrtp-x86_64-x64-vc14-Release \
-    -llibwebrtc-x86_64-x64-vc14-Release \
-    -llibyuv-x86_64-x64-vc14-Release \
     -lWs2_32 \
     -lOle32 \
     -lMsdmo \
